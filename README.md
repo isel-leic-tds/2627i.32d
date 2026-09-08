@@ -1,2 +1,2 @@
-# 2627i.32d
-Código realizado nas aulas da turma LEIC32D de TDS no semestre 2026/2027 Inverno (Paulo Pereira)
+# 2627i.32d by [Prof. Paulo Pereira](https://palbp.github.io/
+Repository for LEIC-TDS course, winter semester of 2026-2027, course section LEIC32D
