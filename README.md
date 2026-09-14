@@ -1,10 +1,10 @@
 # 2627i.32d by [Prof. Paulo Pereira](https://palbp.github.io/)
 Repository for LEIC-TDS course, winter semester of 2026-2027, course section LEIC32D
 
-### Outline
+## Outline
 -----------
 
-#### Week 1 (07/09/2026)
+### Week 1 (07/09/2026)
 * Course introduction
   * Syllabus
   * Evaluation criteria
@@ -26,8 +26,9 @@ References:
 * [Immutability we can afford, by Roman Elizarov](https://elizarov.medium.com/immutability-we-can-afford-10c0dcb8351d)
 * [Video lecture](https://youtu.be/thp4b0JEvFU) (in Portuguese)
 
-#### Week 2 (14/09/2026)
-##### Part 1 - Domain model
+-----------
+### Week 2 (14/09/2026)
+#### Part 1 - Domain model
 * Principles of software design
   * Purpose and benefits of software design
   * Abstraction and encapsulation
@@ -43,7 +44,7 @@ References:
   * Building a domain model for the "8 Puzzle" application
 * [Video lecture](https://youtu.be/v3uRTXBDluI) (in Portuguese)
 
-###### Part 2 - Building a Domain Model in Kotlin _(coming soon)_
+##### Part 2 - Building a Domain Model in Kotlin _(coming soon)_
 * Kotlin's [classes](https://kotlinlang.org/docs/classes.html)
   * [Primary](https://kotlinlang.org/docs/classes.html#primary-constructor) and [secondary constructors](https://kotlinlang.org/docs/classes.html#secondary-constructors)
   * [Initialization blocks](https://kotlinlang.org/docs/classes.html#initializer-blocks)
@@ -54,3 +55,4 @@ References:
   * Building a domain model for the "8 Puzzle" application (no leakage of implementation details)
 * Video lecture (in Portuguese)
 
+-----------
