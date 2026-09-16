@@ -2,8 +2,6 @@
 Repository for LEIC-TDS course, winter semester of 2026-2027, course section LEIC32D
 
 ## Outline
------------
-
 ### Week 1 (07/09/2026)
 * Course introduction
   * Syllabus
