@@ -17,7 +17,18 @@ package palbp.demos.tds.isel.domain
  *      5.6 - Convert to a list of pieces so that it can be iterated (this will be later refactored)
  *      5.7 - Create from a list of pieces
  */
-class Board() {
+class Board {
+
+    data class Piece(val value: Int) {
+        init {
+            require(value in LOWER_LIMIT..UPPER_LIMIT)
+        }
+
+        companion object {
+            const val LOWER_LIMIT = 1
+            const val UPPER_LIMIT = SIDE * SIDE - 1
+        }
+    }
 
     private val pieces: List<Piece?>
 
@@ -26,20 +37,37 @@ class Board() {
         repeat(times = Piece.UPPER_LIMIT) {
             initialList.add(element = Piece(value = it + 1))
         }
-        pieces = initialList.toList()
+        pieces = initialList.toList() + null
     }
 
-    operator fun get(at: Int): Piece? {
-        TODO("Implement this method")
+    operator fun get(at: Int): Piece? = pieces[at]
+
+    operator fun get(row: Int, col: Int): Piece? =
+        pieces[rectangularToLinear(x = row, y = col)]
+
+    fun isAdjacentToEmptySpace(piece: Piece): Boolean {
+        val emptyIndex = getEmptySpaceIndex()
+        val adjacentIndexes = mutableListOf<Int>()
+
+
+        return false
     }
 
-    operator fun get(row: Int, col: Int): Piece? {
-        TODO("Implement this method")
-    }
+    fun getEmptySpaceIndex(): Int =
+        pieces.indexOf(null)
 
     companion object {
         const val SIDE = 3
     }
 }
 
-fun createSolvedBoard() = Board()
+fun rectangularToLinear(x: Int, y: Int): Int {
+    return x + y * Board.SIDE
+}
+
+fun linearToRectangular(linear: Int): Pair<Int, Int> {
+    return Pair(linear % Board.SIDE, linear / Board.SIDE)
+}
+
+fun Int.toRectangular(): Pair<Int, Int> =
+    linearToRectangular(this)

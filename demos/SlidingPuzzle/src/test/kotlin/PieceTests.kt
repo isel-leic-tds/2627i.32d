@@ -1,4 +1,4 @@
-import palbp.demos.tds.isel.domain.Piece
+import palbp.demos.tds.isel.domain.Board.Piece
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
