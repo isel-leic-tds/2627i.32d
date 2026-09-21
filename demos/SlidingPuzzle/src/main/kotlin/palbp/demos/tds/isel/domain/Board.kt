@@ -17,4 +17,29 @@ package palbp.demos.tds.isel.domain
  *      5.6 - Convert to a list of pieces so that it can be iterated (this will be later refactored)
  *      5.7 - Create from a list of pieces
  */
+class Board() {
 
+    private val pieces: List<Piece?>
+
+    init {
+        val initialList = mutableListOf<Piece>()
+        repeat(times = Piece.UPPER_LIMIT) {
+            initialList.add(element = Piece(value = it + 1))
+        }
+        pieces = initialList.toList()
+    }
+
+    operator fun get(at: Int): Piece? {
+        TODO("Implement this method")
+    }
+
+    operator fun get(row: Int, col: Int): Piece? {
+        TODO("Implement this method")
+    }
+
+    companion object {
+        const val SIDE = 3
+    }
+}
+
+fun createSolvedBoard() = Board()

@@ -1,18 +1,10 @@
 package palbp.demos.tds.isel
 
-import palbp.demos.tds.isel.domain.Piece
-
-
-fun myRepeat(count: Int, action: () -> Unit): Unit {
-    for (i in 0 until count)
-        action()
-}
-
-
+import palbp.demos.tds.isel.domain.Board
 
 fun main() {
 
-    myRepeat(count = 38) {
-        println("Benfica campeão!!!")
-    }
+    val board = Board()
+    println(board[0])
+    println(board[1])
 }
