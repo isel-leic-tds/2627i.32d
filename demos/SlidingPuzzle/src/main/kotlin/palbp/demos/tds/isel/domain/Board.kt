@@ -17,6 +17,15 @@ package palbp.demos.tds.isel.domain
  *      5.6 - Convert to a list of pieces so that it can be iterated (this will be later refactored)
  *      5.7 - Create from a list of pieces
  */
+
+/**
+ * Script for next lecture:
+ * 1 - Fix UPPER_LIMIT so that it is equal to SIDE * SIDE (so that UPPER_LMIT - LOWER_LIMT equals the number of pieces)
+ * 2 - Finish implementation of the isAdjacentToEmptySpace method
+ * 3 - Change the Piece so that it is a value class instead of a data class (discussion on the differences).
+ * 4 - Define the Coordinate class and replace the Pair returned by linearToRectangular with a Coordinate instance
+ * (discuss current limitations of value classes in Kotlin and future improvements)
+ */
 class Board {
 
     data class Piece(val value: Int) {
@@ -27,6 +36,7 @@ class Board {
         companion object {
             const val LOWER_LIMIT = 1
             const val UPPER_LIMIT = SIDE * SIDE - 1
+
         }
     }
 
@@ -49,8 +59,7 @@ class Board {
         val emptyIndex = getEmptySpaceIndex()
         val adjacentIndexes = mutableListOf<Int>()
 
-
-        return false
+        TODO()
     }
 
     fun getEmptySpaceIndex(): Int =
@@ -60,14 +69,3 @@ class Board {
         const val SIDE = 3
     }
 }
-
-fun rectangularToLinear(x: Int, y: Int): Int {
-    return x + y * Board.SIDE
-}
-
-fun linearToRectangular(linear: Int): Pair<Int, Int> {
-    return Pair(linear % Board.SIDE, linear / Board.SIDE)
-}
-
-fun Int.toRectangular(): Pair<Int, Int> =
-    linearToRectangular(this)

@@ -3,7 +3,7 @@ import palbp.demos.tds.isel.domain.toRectangular
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class CoordinateConversionTests {
+class CoordinateConversionsTests {
 
     @Test
     fun `rectangular to linear conversion works correctly`() {
