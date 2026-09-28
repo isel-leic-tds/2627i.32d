@@ -2,12 +2,25 @@ package palbp.demos.tds.isel.domain
 
 
 fun rectangularToLinear(x: Int, y: Int): Int {
-    return x + y * Board.SIDE
+    return y + x * Board.SIDE
 }
 
-fun linearToRectangular(linear: Int): Pair<Int, Int> {
-    return Pair(linear % Board.SIDE, linear / Board.SIDE)
+/**
+ * Converts a linear coordinate to a rectangular coordinate.
+ * @param linear The linear coordinate.
+ * @return The rectangular coordinate.
+ * @throws IllegalArgumentException if the linear coordinate is out of bounds.
+ */
+@Throws(IllegalArgumentException::class)
+fun linearToRectangular(linear: Int): Board.Coordinate {
+    return Board.Coordinate(row = linear / Board.SIDE, col = linear % Board.SIDE)
 }
 
-fun Int.toRectangular(): Pair<Int, Int> =
+/**
+ * Extension of Integer that converts a linear coordinate to a rectangular coordinate.
+ * @return The rectangular coordinate.
+ * @throws IllegalArgumentException if the linear coordinate is out of bounds.
+ */
+@Throws(IllegalArgumentException::class)
+fun Int.toRectangular(): Board.Coordinate =
     linearToRectangular(this)

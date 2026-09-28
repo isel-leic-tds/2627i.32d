@@ -1,5 +1,7 @@
 package palbp.demos.tds.isel.domain
 
+import palbp.demos.tds.isel.domain.Board.Piece.Companion.LOWER_LIMIT
+import palbp.demos.tds.isel.domain.Board.Piece.Companion.UPPER_LIMIT
 
 /**
  * Requirements for the board type
@@ -10,33 +12,39 @@ package palbp.demos.tds.isel.domain
  *  4 - Is immutable
  *  5 - Contains the following operations:
  *      5.1 - Move a piece
- *      5.2 - Check if a piece can move (is adjacent to the empty space)
  *      5.3 - Check if the board is solved
- *      5.4 - Get the empty space position
- *      5.5 - Get the piece at a given position
  *      5.6 - Convert to a list of pieces so that it can be iterated (this will be later refactored)
  *      5.7 - Create from a list of pieces
  */
 
 /**
- * Script for next lecture:
- * 1 - Fix UPPER_LIMIT so that it is equal to SIDE * SIDE (so that UPPER_LMIT - LOWER_LIMT equals the number of pieces)
- * 2 - Finish implementation of the isAdjacentToEmptySpace method
- * 3 - Change the Piece so that it is a value class instead of a data class (discussion on the differences).
- * 4 - Define the Coordinate class and replace the Pair returned by linearToRectangular with a Coordinate instance
- * (discuss current limitations of value classes in Kotlin and future improvements)
+ * Script for the next lecture:
+ * 5 - Document the code
+ * 6 - Let's start building a console-based UI
+ * 7 - Separation of concerns principle, revisited
+ * 8 - The UI as a function of the data (the View)
+ * 9 - Building a command loop (REPL style)
  */
+
 class Board {
 
-    data class Piece(val value: Int) {
+    @JvmInline
+    value class Piece(val value: Int) {
         init {
-            require(value in LOWER_LIMIT..UPPER_LIMIT)
+            require(value in LOWER_LIMIT until UPPER_LIMIT)
         }
 
         companion object {
             const val LOWER_LIMIT = 1
-            const val UPPER_LIMIT = SIDE * SIDE - 1
+            const val UPPER_LIMIT = SIDE * SIDE
 
+        }
+    }
+
+    data class Coordinate(val row: Int, val col: Int) {
+        init {
+            require(row in 0 until SIDE)
+            require(col in 0 until SIDE)
         }
     }
 
@@ -44,7 +52,7 @@ class Board {
 
     init {
         val initialList = mutableListOf<Piece>()
-        repeat(times = Piece.UPPER_LIMIT) {
+        repeat(times = UPPER_LIMIT - LOWER_LIMIT) {
             initialList.add(element = Piece(value = it + 1))
         }
         pieces = initialList.toList() + null
@@ -55,11 +63,40 @@ class Board {
     operator fun get(row: Int, col: Int): Piece? =
         pieces[rectangularToLinear(x = row, y = col)]
 
+    fun getPieceOrNull(row: Int, col: Int): Piece? {
+        TODO("Not yet implemented")
+    }
+
     fun isAdjacentToEmptySpace(piece: Piece): Boolean {
         val emptyIndex = getEmptySpaceIndex()
-        val adjacentIndexes = mutableListOf<Int>()
+        val (row, column) = linearToRectangular(emptyIndex)
 
-        TODO()
+        // TODO: Change this after we study HOFs
+        if (row - 1 >= 0) {
+            val upPiece = this[row - 1, column]
+            if (piece == upPiece)
+                return true
+        }
+
+        if (row + 1 < SIDE) {
+            val downPiece = this[row + 1, column]
+            if (piece == downPiece)
+                return true
+        }
+
+        if (column - 1 >= 0) {
+            val leftPiece = this[row, column - 1]
+            if (piece == leftPiece)
+                return true
+        }
+
+        if (column + 1 < SIDE) {
+            val rightPiece = this[row, column + 1]
+            if (piece == rightPiece)
+                return true
+        }
+
+        return false
     }
 
     fun getEmptySpaceIndex(): Int =

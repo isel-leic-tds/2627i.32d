@@ -2,6 +2,7 @@ import palbp.demos.tds.isel.domain.rectangularToLinear
 import palbp.demos.tds.isel.domain.toRectangular
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class CoordinateConversionsTests {
 
@@ -25,5 +26,15 @@ class CoordinateConversionsTests {
         // Assert
         assertEquals(expected = 1, actual = x)
         assertEquals(expected = 1, actual = y)
+    }
+
+    @Test
+    fun `linear to rectangular conversion of a out-of-bounds value throws an exception`() {
+        // Arrange
+        val linear = -1
+        // Act & Assert
+        assertFailsWith<IllegalArgumentException> {
+            linear.toRectangular()
+        }
     }
 }

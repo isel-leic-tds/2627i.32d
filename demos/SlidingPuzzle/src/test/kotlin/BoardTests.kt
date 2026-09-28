@@ -4,6 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
+import kotlin.test.fail
 
 class BoardTests {
 
@@ -16,8 +17,7 @@ class BoardTests {
         // Assert
         assertEquals(
             expected = Piece.LOWER_LIMIT,
-            actual = if (piece != null) piece.value else null
-            //actual = piece?.value
+            actual = piece?.value
         )
     }
 
@@ -26,7 +26,7 @@ class BoardTests {
         // Arrange
         val sut = Board()
         // Act
-        val piece = sut[Piece.UPPER_LIMIT]
+        val piece = sut[Piece.UPPER_LIMIT - 1]
         // Assert
         assertNull(actual = piece)
     }
@@ -47,7 +47,7 @@ class BoardTests {
         val sut = Board()
         // Act & Assert
         assertFailsWith<IndexOutOfBoundsException> {
-            sut[Piece.UPPER_LIMIT + 1]
+            sut[Piece.UPPER_LIMIT]
         }
     }
 
@@ -63,5 +63,31 @@ class BoardTests {
             expected = Piece.LOWER_LIMIT + linearIndex,
             actual = piece?.value
         )
+    }
+
+    @Test
+    fun `isAdjacentToEmptySpace returns true for adjacent pieces`() {
+        // Arrange
+        val sut = Board()
+        val piece = sut[1, 2] ?: fail("Failed to get piece")
+
+        // Act
+        val isAdjacent = sut.isAdjacentToEmptySpace(piece)
+
+        // Assert
+        assertEquals(expected = true, actual = isAdjacent)
+    }
+
+    @Test
+    fun `isAdjacentToEmptySpace returns false for non-adjacent pieces`() {
+        // Arrange
+        val sut = Board()
+        val piece = sut[0, 0] ?: fail("Failed to get piece")
+
+        // Act
+        val isAdjacent = sut.isAdjacentToEmptySpace(piece)
+
+        // Assert
+        assertEquals(expected = false, actual = isAdjacent)
     }
 }
