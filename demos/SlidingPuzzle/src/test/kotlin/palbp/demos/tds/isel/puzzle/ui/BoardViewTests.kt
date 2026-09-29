@@ -1,7 +1,7 @@
+package palbp.demos.tds.isel.puzzle.ui
+
 import org.junit.jupiter.api.Test
-import palbp.demos.tds.isel.domain.Board
-import palbp.demos.tds.isel.ui.Display
-import palbp.demos.tds.isel.ui.boardView
+import palbp.demos.tds.isel.puzzle.domain.Board
 import kotlin.test.assertEquals
 
 class MockDisplay : Display {
@@ -31,7 +31,6 @@ class BoardViewTests {
             board = board,
             display = mockDisplay
         )
-
 
         // Assert
         val output = mockDisplay.getOutput()

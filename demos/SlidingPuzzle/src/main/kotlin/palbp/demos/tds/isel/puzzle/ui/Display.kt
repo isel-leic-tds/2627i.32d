@@ -1,4 +1,4 @@
-package palbp.demos.tds.isel.ui
+package palbp.demos.tds.isel.puzzle.ui
 
 /**
  * Abstraction used to aggregate all display operations.

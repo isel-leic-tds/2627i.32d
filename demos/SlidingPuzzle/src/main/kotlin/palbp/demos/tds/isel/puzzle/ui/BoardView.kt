@@ -1,6 +1,6 @@
-package palbp.demos.tds.isel.ui
+package palbp.demos.tds.isel.puzzle.ui
 
-import palbp.demos.tds.isel.domain.Board
+import palbp.demos.tds.isel.puzzle.domain.Board
 
 /**
  * Used to display a puzzle board.

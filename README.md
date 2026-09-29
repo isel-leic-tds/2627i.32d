@@ -55,7 +55,7 @@ References:
 
 -----------
 
-### Week 3 (21/09/2026)
+## Week 3 (21/09/2026)
 #### Part 1 - Domain model (continued)
 * Principles of software design (continued)
   * Abstraction and encapsulation
@@ -72,3 +72,34 @@ References:
 * Demos:
   * Building a domain model for the "8 Puzzle" application (continued)
 * [Video lecture - Aula 04](https://www.youtube.com/watch?v=ZgjCTCERUxo&list=PLCNf6hgdTqfM&index=4) (in Portuguese)
+
+#### Part 2 - Building a Domain Model in Kotlin (continued)
+* Language features for building a domain model in Kotlin (continued)
+  * [Kotlin's nested classes](https://kotlinlang.org/docs/nested-classes.html)
+  * Value classes 
+    * Purpose and motivation
+    * Value semantics versus reference semantics
+    * [Inline classes](https://kotlinlang.org/docs/inline-classes.html)
+* [Video lecture - Aula 05](https://www.youtube.com/watch?v=k1gdAQctHGc&list=PLCNf6hgdTqfM&index=5) (in Portuguese)
+
+-----------
+
+### Week 4 (28/09/2026)
+#### Part 1 - Building a UI in a console application
+* Principles of software design (continued)
+  * Separation of concerns, revisited
+    * The case for the independence of the domain model from the user interface
+* Building a user interface in a console application
+  * Purpose of a user interface
+  * Considerations on the testability of a user interface
+* Dynamic dispatch as a means to achieve testability
+* Building blocks for dynamic dispatch in Kotlin
+  * [Higher-order functions](https://kotlinlang.org/docs/lambdas.html#higher-order-functions)
+  * [Lambda expressions](https://kotlinlang.org/docs/lambdas.html#lambda-expressions)
+  * [Anonymous functions](https://kotlinlang.org/docs/lambdas.html#anonymous-functions)
+  * [Function types](https://kotlinlang.org/docs/lambdas.html#function-types)
+  * [Interfaces](https://kotlinlang.org/docs/interfaces.html)
+* [Video lecture - Aula 06](https://www.youtube.com/watch?v=-gjbRNmZbRU&list=PLCNf6hgdTqfM&index=6) (in Portuguese)
+
+#### Part 2 - Building a UI in a console application (continued)
+_coming soon..._

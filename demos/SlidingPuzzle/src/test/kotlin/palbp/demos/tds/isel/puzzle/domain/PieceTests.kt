@@ -1,4 +1,6 @@
-import palbp.demos.tds.isel.domain.Board.Piece
+package palbp.demos.tds.isel.puzzle.domain
+
+import palbp.demos.tds.isel.puzzle.domain.Board.Piece
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
