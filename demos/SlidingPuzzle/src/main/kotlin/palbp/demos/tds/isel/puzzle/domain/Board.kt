@@ -1,6 +1,5 @@
 package palbp.demos.tds.isel.puzzle.domain
 
-import palbp.demos.tds.isel.puzzle.domain.Board.Piece.Companion.LOWER_LIMIT
 import palbp.demos.tds.isel.puzzle.domain.Board.Piece.Companion.UPPER_LIMIT
 
 /**
@@ -51,7 +50,7 @@ class Board : Iterable<Board.Piece?> {
     /**
      * Initializes a new board with the solved configuration.
      */
-    constructor(): this(pieces = (1..< UPPER_LIMIT).map { Board.Piece(it) } + null)
+    constructor(): this(pieces = (1..< UPPER_LIMIT).map { Piece(it) } + null)
 
     /**
      * Initializes a new board with the given list of pieces.
