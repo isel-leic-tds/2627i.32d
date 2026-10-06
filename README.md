@@ -102,4 +102,11 @@ References:
 * [Video lecture - Aula 06](https://www.youtube.com/watch?v=-gjbRNmZbRU&list=PLCNf6hgdTqfM&index=6) (in Portuguese)
 
 #### Part 2 - Building a UI in a console application (continued)
-_coming soon..._
+* Applying the principles of software design to the design of a console-based user interface
+  * Domain modeling and user interface design as independent concerns
+  * Discussion on the relevance of domain specific errors
+* Using dynamic dispatch to implement the REPL (Read-Evaluate-Print Loop) pattern in a console application
+  * The Command Design Pattern
+  * Purpose and benefits of the command design pattern
+  * Designing a command hierarchy for the "8 Puzzle" application
+* [Video lecture - Aula 07](https://www.youtube.com/watch?v=kcRfAz68xW0&list=PLCNf6hgdTqfM&index=7) (in Portuguese)
