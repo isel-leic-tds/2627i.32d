@@ -1,4 +1,4 @@
-package palbp.demos.tds.isel.puzzle.commands
+package palbp.demos.tds.isel.puzzle.ui.commands
 
 /**
  * Base class for all command execution errors
@@ -17,3 +17,9 @@ class PieceNotMoveableException(message: String) : CommandException(message)
  * @param message the error message
  */
 class InvalidMoveCoordinatesException(message: String) : CommandException(message)
+
+/**
+ * Exception thrown when an unknown command is encountered
+ * @param message the error message
+ */
+class UnknownCommandException(message: String) : CommandException(message)
