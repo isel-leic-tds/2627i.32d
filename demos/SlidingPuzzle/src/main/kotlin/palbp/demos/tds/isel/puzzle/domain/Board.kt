@@ -36,9 +36,38 @@ class Board : Iterable<Board.Piece?> {
      * @throws IllegalArgumentException if the coordinates are not in the valid range
      */
     data class Coordinate(val row: Int, val col: Int) {
+
         init {
-            require(row in 0 until SIDE)
-            require(col in 0 until SIDE)
+            require(isValid(row, col))
+        }
+
+        /**
+         * Returns the list of neighboring coordinates.
+         * @return the list of neighboring coordinates.
+         */
+        fun neighbors(): List<Coordinate> = buildList {
+            createOrNull(row, col - 1)?.let { add(it) }
+            createOrNull(row, col + 1)?.let { add(it) }
+            createOrNull(row - 1, col)?.let { add(it) }
+            createOrNull(row + 1, col)?.let { add(it) }
+        }
+
+        companion object {
+            /**
+             * Returns true if the given coordinates are valid for this board.
+             * @param row the row to check
+             * @param col the column to check
+             * @return true if the coordinates are valid, false otherwise
+             */
+            private fun isValid(row: Int, col: Int) = row in 0 until SIDE && col in 0 until SIDE
+
+            /**
+             * Creates a new coordinate with the given row and column, or null if the coordinates are invalid.
+             * @param row the row
+             * @param col the column
+             * @return a new coordinate with the given row and column, or null if the coordinates are invalid
+             */
+            fun createOrNull(row: Int, col: Int) = if (isValid(row, col)) Coordinate(row, col) else null
         }
     }
 
@@ -50,7 +79,7 @@ class Board : Iterable<Board.Piece?> {
     /**
      * Initializes a new board with the solved configuration.
      */
-    constructor(): this(pieces = (1..< UPPER_LIMIT).map { Piece(it) } + null)
+    constructor() : this(pieces = (1..<UPPER_LIMIT).map { Piece(it) } + null)
 
     /**
      * Initializes a new board with the given list of pieces.
@@ -78,8 +107,9 @@ class Board : Iterable<Board.Piece?> {
      */
     @Throws(IllegalArgumentException::class)
     operator fun get(row: Int, col: Int): Piece? =
-        if (row in 0 until SIDE && col in 0 until SIDE) { pieces[rectangularToLinear(row, col)] }
-        else throw IndexOutOfBoundsException("Invalid coordinates")
+        if (row in 0 until SIDE && col in 0 until SIDE) {
+            pieces[rectangularToLinear(row, col)]
+        } else throw IndexOutOfBoundsException("Invalid coordinates")
 
     /**
      * Gets the piece at the specified rectangular coordinates, or null if the coordinates are out of bounds or
@@ -99,8 +129,17 @@ class Board : Iterable<Board.Piece?> {
      * @return true if the piece is adjacent to the empty space, false otherwise
      */
     fun isAdjacentToEmptySpace(piece: Piece): Boolean {
-        val (row, column) = linearToRectangular(pieces.indexOf(piece))
-        val (emptyRow, emptyColumn) = linearToRectangular(getEmptySpaceIndex())
+        return isAdjacentToEmptySpace(pieces.indexOf(piece).toRectangular())
+    }
+
+    /**
+     * Checks if the given coordinate is adjacent to the empty space.
+     * @param coordinate the coordinate to check
+     * @return true if the coordinate is adjacent to the empty space, false otherwise
+     */
+    fun isAdjacentToEmptySpace(coordinate: Coordinate): Boolean {
+        val (row, column) = coordinate
+        val (emptyRow, emptyColumn) = getEmptySpaceCoordinate()
 
         return row == emptyRow && column == emptyColumn - 1 ||      // Left
                 row == emptyRow && column == emptyColumn + 1 ||     // Right
@@ -115,28 +154,40 @@ class Board : Iterable<Board.Piece?> {
     fun getEmptySpaceIndex(): Int = pieces.indexOf(null)
 
     /**
-     * Returns a list of all pieces in the board, including the empty space. The position of the piece in this list
-     * corresponds to its position in the board (considering the linear indexing).
-     * @return a list of all pieces in the board, including the empty space which is represented as null.
+     * Returns the coordinate of the empty space.
+     * @return the coordinate of the empty space
      */
-    fun toList(): List<Piece?> = pieces.toList()
+    fun getEmptySpaceCoordinate() = getEmptySpaceIndex().toRectangular()
 
     /**
      * Moves the specified piece to the empty space.
      * @param piece the piece to move
      * @return a new board with the piece moved to the empty space, or the same board if the move was illegal.
      */
-    fun move(piece: Piece): Board {
-        val pieceIndex = pieces.indexOf(piece)
+    fun move(piece: Piece): Board = movePieceAt(pieces.indexOf(piece).toRectangular())
+
+    /**
+     * Returns the coordinate of the specified piece.
+     * @param it the piece to get the coordinate for
+     * @return the coordinate of the piece, or null if the piece is not on the board
+     */
+    fun getCoordinate(it: Piece): Coordinate = pieces.indexOf(it).toRectangular()
+
+    /**
+     * Moves the piece at the specified coordinate to the empty space.
+     * @param at the coordinate of the piece to move
+     * @return a new board with the piece moved to the empty space, or the same board if the move was illegal.
+     */
+    fun movePieceAt(at: Coordinate): Board {
+        val pieceIndex = at.toLinear()
         val emptySpaceIndex = getEmptySpaceIndex()
 
-        return if (isAdjacentToEmptySpace(piece)) {
+        return if (isAdjacentToEmptySpace(at)) {
             val newBoardPieces = pieces.toMutableList()
-            newBoardPieces[emptySpaceIndex] = piece
+            newBoardPieces[emptySpaceIndex] = pieces[pieceIndex]
             newBoardPieces[pieceIndex] = null
             Board(newBoardPieces)
-        }
-        else {
+        } else {
             this
         }
     }
@@ -146,7 +197,7 @@ class Board : Iterable<Board.Piece?> {
      * @return true if the board is solved, false otherwise
      */
     fun isSolved(): Boolean {
-        return pieces == solved
+        return pieces == solved.pieces
     }
 
     /**
@@ -166,5 +217,36 @@ class Board : Iterable<Board.Piece?> {
          * The solved board configuration.
          */
         val solved = Board()
+
+        /**
+         * An 8-puzzle is solvable if the number of inversions is even.
+         * NOTE: this is a simplification that applies to the 8-puzzle with the blank space in the bottom-right corner.
+         * For a detailed explanation of the solvability rule, see:
+         * https://www.geeksforgeeks.org/check-instance-8-puzzle-solvable/
+         */
+        fun createRandom(): Board {
+            val shuffled = (1..<UPPER_LIMIT).shuffled().toMutableList()
+            val solvable = if (shuffled.isSolvable()) {
+                shuffled
+            } else {
+                shuffled.swapInversion()
+            }
+            return Board(solvable.map { Piece(it) } + null)
+        }
     }
+
+    // Canonical methods
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as Board
+
+        return pieces == other.pieces
+    }
+
+    override fun hashCode() = pieces.hashCode()
+
+    override fun toString() = pieces.joinToString(" ")
 }

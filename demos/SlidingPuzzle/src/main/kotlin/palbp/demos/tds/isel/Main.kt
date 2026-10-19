@@ -18,6 +18,17 @@ import palbp.demos.tds.isel.puzzle.ui.parse
  * - Quit -> exits the application
  * - Help -> Displays all the supported commands
  */
+
+/**
+ * Script for the next lecture:
+ * 1 - Revisit the code base. Start at the main function and trace the execution of each command
+ * 2 - Implement error handling for invalid commands and arguments
+ * 3 - Implement the Help command to display all supported commands
+ *  3.1 - Start with motivation to introduce the "Context based" approach
+ *  3.2 - Prepare for a new result type. The sum type will contain Exit, BoardResult, HelpResult
+ *  3.3 - Implement the Context and modify the command execution to use it and update the tests accordingly
+ * 4 - Implement the solve command
+ */
 fun main() {
     var board: Board? = null
 
@@ -25,10 +36,8 @@ fun main() {
         print("Enter a command: ")
         val input = readln()
 
-        // parse
         val (command, args) = parse(input)
 
-        // execute
         try {
 
             val result = command.execute(board, args)
@@ -42,6 +51,7 @@ fun main() {
 
         } catch (e: CommandException) {
             // TODO: Handle command execution errors
+            println("Error: ${e.message}")
         }
     }
 }

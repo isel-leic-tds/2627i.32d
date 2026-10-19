@@ -1,7 +1,5 @@
 package palbp.demos.tds.isel.puzzle.domain
 
-
-
 /**
  * Converts a rectangular coordinate to a linear coordinate.
  * @param row The row.
@@ -26,9 +24,7 @@ fun Board.Coordinate.toLinear(): Int = rectangularToLinear(row, col)
  * @throws IllegalArgumentException if the linear coordinate is out of bounds.
  */
 @Throws(IllegalArgumentException::class)
-fun linearToRectangular(linear: Int): Board.Coordinate {
-    return Board.Coordinate(row = linear / Board.SIDE, col = linear % Board.SIDE)
-}
+fun linearToRectangular(linear: Int) = Board.Coordinate(row = linear / Board.SIDE, col = linear % Board.SIDE)
 
 /**
  * Extension of Integer that converts a linear coordinate to a rectangular coordinate.
@@ -36,6 +32,5 @@ fun linearToRectangular(linear: Int): Board.Coordinate {
  * @throws IllegalArgumentException if the linear coordinate is out of bounds.
  */
 @Throws(IllegalArgumentException::class)
-fun Int.toRectangular(): Board.Coordinate =
-    linearToRectangular(this)
+fun Int.toRectangular(): Board.Coordinate = linearToRectangular(this)
 

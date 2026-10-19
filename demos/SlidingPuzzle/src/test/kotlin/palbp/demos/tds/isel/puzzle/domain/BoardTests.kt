@@ -156,7 +156,7 @@ class BoardTests {
 
         // Act
         val piece = sut.getPieceOrNull(row = 2, col = 2)
-        
+
         // Assert
         assertNull(actual = piece)
     }
@@ -165,7 +165,7 @@ class BoardTests {
     fun `getPieceOrNull with invalid rectangular indexes returns null`() {
         // Arrange
         val sut = Board()
-        
+
         // Act
         val piece = sut.getPieceOrNull(row = Board.SIDE, col = 0)
 
@@ -217,16 +217,107 @@ class BoardTests {
         // Arrange
         val sut = Board()
         val piece = sut[2, 1] ?: fail("Failed to get piece")
-        val expectedBoard = Board(pieces = listOf(
-            Piece(1), Piece(2), Piece(3),
-            Piece(4), Piece(5), Piece(6),
-            Piece(7), null, Piece(8),
-        ))
+        val expectedBoard = Board(
+            pieces = listOf(
+                Piece(1), Piece(2), Piece(3),
+                Piece(4), Piece(5), Piece(6),
+                Piece(7), null, Piece(8),
+            )
+        )
 
         // Act
         val actualBoard = sut.move(piece)
 
         // Assert
         assertContentEquals(expected = expectedBoard, actual = actualBoard)
+    }
+
+    @Test
+    fun `createRandom creates a solvable board`() {
+        // Act
+        val sut = Board.createRandom()
+
+        // Assert
+        assertTrue(sut.mapNotNull { it?.value }.isSolvable())
+    }
+
+    @Test
+    fun `isSolved returns true for a solved board`() {
+        // Arrange
+        val sut = Board()
+
+        // Act
+        val isSolved = sut.isSolved()
+
+        // Assert
+        assertTrue(isSolved)
+    }
+
+    @Test
+    fun `isSolved returns false for an unsolved board`() {
+        // Arrange
+        val sut = Board(
+            pieces = listOf(
+                Piece(1), Piece(2), Piece(3),
+                Piece(4), Piece(5), Piece(6),
+                Piece(8), Piece(7), null
+            )
+        )
+
+        // Act
+        val isSolved = sut.isSolved()
+
+        // Assert
+        assertFalse(isSolved)
+    }
+
+    @Test
+    fun `equals with identical board returns true`() {
+        // Arrange
+        val board1 = Board(
+            pieces = listOf(
+                Piece(1), Piece(2), Piece(3),
+                Piece(4), Piece(5), Piece(6),
+                Piece(7), Piece(8), null
+            )
+        )
+        val board2 = Board(
+            pieces = listOf(
+                Piece(1), Piece(2), Piece(3),
+                Piece(4), Piece(5), Piece(6),
+                Piece(7), Piece(8), null
+            )
+        )
+
+        // Act
+        val isEquals = board1 == board2
+
+        // Assert
+        assertTrue(isEquals)
+    }
+
+    @Test
+    fun `equals with different board returns false`() {
+        // Arrange
+        val board1 = Board(
+            pieces = listOf(
+                Piece(1), Piece(2), Piece(3),
+                Piece(4), Piece(5), Piece(6),
+                Piece(7), Piece(8), null
+            )
+        )
+        val board2 = Board(
+            pieces = listOf(
+                Piece(1), Piece(2), Piece(3),
+                Piece(4), Piece(5), Piece(6),
+                Piece(8), Piece(7), null
+            )
+        )
+
+        // Act
+        val isEquals = board1 == board2
+
+        // Assert
+        assertFalse(isEquals)
     }
 }

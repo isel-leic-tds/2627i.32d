@@ -11,7 +11,7 @@ class NewCommand : Command {
      * Executes the new command. Any arguments passed to the command are ignored.
      * @return the result of the command
      */
-    override fun execute(board: Board?, args: List<String>) = CommandResult.Success(Board())
+    override fun execute(board: Board?, args: List<String>) = CommandResult.Success(Board.createRandom())
 
     /**
      * Returns the usage information for the new command

@@ -4,13 +4,14 @@ import org.junit.jupiter.api.Test
 import palbp.demos.tds.isel.puzzle.domain.Board
 import palbp.demos.tds.isel.puzzle.ui.commands.CommandResult
 import palbp.demos.tds.isel.puzzle.ui.commands.NewCommand
+import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNotSame
 
 class NewCommandTests {
 
     @Test
-    fun `New with no arguments succeeds`() {
+    fun `New with no arguments returns unsolved board`() {
         // Arrange
         val sut = NewCommand()
 
@@ -19,6 +20,7 @@ class NewCommandTests {
 
         // Assert
         assertIs<CommandResult.Success>(result)
+        assertFalse(result.board.isSolved())
     }
 
     @Test
