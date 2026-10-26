@@ -11,7 +11,7 @@ class QuitCommand : Command {
      * Executes the quit command. Any arguments passed to the command are ignored.
      * @return the result of the command
      */
-    override fun execute(board: Board?, args: List<String>) = CommandResult.Exit
+    override fun execute(context: CommandContext, args: List<String>) = CommandResult.Exit
 
     /**
      * Returns the usage information for the quit command

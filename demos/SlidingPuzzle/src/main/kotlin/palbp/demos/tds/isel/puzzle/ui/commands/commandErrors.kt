@@ -7,6 +7,19 @@ package palbp.demos.tds.isel.puzzle.ui.commands
 open class CommandException(message: String) : Exception(message)
 
 /**
+ * Exception thrown when an unknown command is encountered
+ * @param message the error message
+ */
+class UnknownCommandException(message: String) : CommandException(message)
+
+/**
+ * Exception thrown when invalid command arguments are encountered
+ * @param command the command that failed
+ * @param message the error message
+ */
+class InvalidCommandArgumentsException(val command: Command, message: String) : CommandException(message)
+
+/**
  * Exception thrown when a piece is not moveable
  * @param message the error message
  */
@@ -17,9 +30,3 @@ class PieceNotMoveableException(message: String) : CommandException(message)
  * @param message the error message
  */
 class InvalidMoveCoordinatesException(message: String) : CommandException(message)
-
-/**
- * Exception thrown when an unknown command is encountered
- * @param message the error message
- */
-class UnknownCommandException(message: String) : CommandException(message)

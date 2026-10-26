@@ -7,7 +7,7 @@ import palbp.demos.tds.isel.puzzle.domain.Board
  * @param board The board to display.
  * @param display The display to use.
  */
-fun boardView(board: Board, display: Display) {
+fun displayBoard(board: Board, display: Display) {
     repeat(Board.SIDE) { row ->
         repeat(Board.SIDE) { col ->
             val piece = board[row, col]

@@ -27,7 +27,7 @@ class BoardViewTests {
         val mockDisplay = MockDisplay()
 
         // Act
-        boardView(
+        displayBoard(
             board = board,
             display = mockDisplay
         )

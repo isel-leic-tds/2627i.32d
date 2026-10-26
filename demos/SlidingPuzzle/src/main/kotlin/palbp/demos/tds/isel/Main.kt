@@ -1,10 +1,8 @@
 package palbp.demos.tds.isel
 
-import palbp.demos.tds.isel.puzzle.domain.Board
 import palbp.demos.tds.isel.puzzle.ui.ConsoleDisplay
-import palbp.demos.tds.isel.puzzle.ui.boardView
-import palbp.demos.tds.isel.puzzle.ui.commands.CommandException
-import palbp.demos.tds.isel.puzzle.ui.commands.CommandResult
+import palbp.demos.tds.isel.puzzle.ui.displayBoard
+import palbp.demos.tds.isel.puzzle.ui.commands.*
 import palbp.demos.tds.isel.puzzle.ui.parse
 
 /**
@@ -24,34 +22,43 @@ import palbp.demos.tds.isel.puzzle.ui.parse
  * 1 - Revisit the code base. Start at the main function and trace the execution of each command
  * 2 - Implement error handling for invalid commands and arguments
  * 3 - Implement the Help command to display all supported commands
- *  3.1 - Start with motivation to introduce the "Context based" approach
+ *  3.1 - Start with motivation to introduce the "Context-based" approach
  *  3.2 - Prepare for a new result type. The sum type will contain Exit, BoardResult, HelpResult
  *  3.3 - Implement the Context and modify the command execution to use it and update the tests accordingly
  * 4 - Implement the solve command
  */
 fun main() {
-    var board: Board? = null
+
+    var context = CommandContext(
+        supportedCommands = listOf(NewCommand(), MoveCommand(), SolveCommand(), HelpCommand(), QuitCommand())
+    )
 
     while (true) {
-        print("Enter a command: ")
+
+        print("Enter command >> ")
         val input = readln()
 
-        val (command, args) = parse(input)
-
         try {
+            val (command, args) = parse(input)
 
-            val result = command.execute(board, args)
-            board = when(result) {
+            when(val result = command.execute(context, args)) {
+                is CommandResult.BoardResult -> {
+                    displayBoard(board = result.board, display = ConsoleDisplay)
+                    context = context.copy(board = result.board)
+                }
+                is CommandResult.TextResult -> {
+                    println(result.value)
+                }
                 CommandResult.Exit -> break
-                is CommandResult.Success -> result.board
             }
-
-            // display
-            boardView(board = board, display = ConsoleDisplay)
-
-        } catch (e: CommandException) {
-            // TODO: Handle command execution errors
-            println("Error: ${e.message}")
+        }
+        catch (e: InvalidCommandArgumentsException) {
+            println("Error: Invalid command arguments.")
+            println("Usage: ${e.command.usage()}")
+        }
+        catch (e: UnknownCommandException) {
+            println("Error: Command not found. Type 'Help' for a list of supported commands.")
+            println("Error message is: ${e.message}")
         }
     }
 }
