@@ -1,4 +1,4 @@
-package palbp.demos.tds.isel.sliding
+package palbp.demos.tds.isel.sliding.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import palbp.demos.tds.isel.sliding.Route
 
 @Composable
 fun MainScreen(onNavigateTo: (Route) -> Unit) {
